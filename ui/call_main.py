@@ -11,11 +11,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QWidget, QCh
 from ui.ui_output.main import Ui_MainWindow
 from PyQt5.QtCore import pyqtSignal, Qt
 import ui.static.icons_rc
-import multiprocessing
 import threading
 import time
-import yaml
-# from Converter import Converter
 from util_tools import cut_dict, array_split, get_file
 import pythoncom
 import win32com.client as win32
@@ -77,8 +74,6 @@ class ConverterForPyQT(QThread):
             thread.join()
 
 
-
-
 # 这个类才是实际进行操作的类，所以要继承重写Converter的内容
 
 class LogsThread(QThread):
@@ -135,6 +130,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         dir_name = os.path.dirname(current_path)
         file_abs_path = os.path.abspath(dir_name)
         self.list_path = os.path.split(file_abs_path)
+
+        # 配置qss
+        qss_path = os.path.join(self.list_path[0], r"ui\static\Ubuntu.qss")
+        self.setStyleSheet(open(qss_path, "r").read())
 
         # 配置attrs
         self.excel_dir_path = ""
